@@ -1,0 +1,10 @@
+create playerSelection
+Convert playerSelection into all toLowerCase
+create computerSelection who will = getComputerChoice
+Function parameters playerSelection and computerSelection
+IF 
+paper > rock message "You Lose! Paper beats Rock" or "You Win! Paper beats Rock!"
+rock > scissors message "You Lose! Rock beats Scissors" or "You Win! Rock beats Scissors!"
+scissors > paper message "You Lose! Scissors beats paper" or "You Win! Scissors beats paper!"
+
+rock = rock, paper = paper, scissors = scissors message "Go again" 
