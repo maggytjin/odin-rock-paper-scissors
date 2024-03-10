@@ -8,3 +8,9 @@ rock > scissors message "You Lose! Rock beats Scissors" or "You Win! Rock beats 
 scissors > paper message "You Lose! Scissors beats paper" or "You Win! Scissors beats paper!"
 
 rock = rock, paper = paper, scissors = scissors message "Go again" 
+
+
+keeping score to record winner or loser at the end
+loop thru playRound 5 times 
+display winner at the end
+setup prompt to get user input 
