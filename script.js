@@ -1,83 +1,97 @@
-const playerSelection = prompt("Rock, paper or scissors?", " ").toLowerCase();
-const computerSelection = getComputerChoice();
+const buttons = document.querySelectorAll("button");
+const rock = document.querySelector("#rock");
+let playerRock = rock.addEventListener("click", (e) => {
+    console.log(e.target.id);
+});
+const paper = document.querySelector("#paper");
+let playerPaper = paper.addEventListener("click", (e) => {
+    console.log(e.target.id);
+});
+const scissors = document.querySelector("#scissors");
+let playerScissors = scissors.addEventListener("click", (e) => {
+    console.log(e.target.id);
+});
+const container = document.querySelector("#container");
+let round = document.querySelector(".round");
+round.textContent = "Round: 0";
+let picks = document.querySelector(".picks");
+let outcome = document.querySelector(".outcome");
+let score = document.querySelector(".score");
+let over = document.querySelector(".game-over");
 
+let playerSelection;
+let computerSelection;
 let userScore = 0; 
 let compScore = 0;
 let userCount = 0;
 
-function getComputerChoice() {
-    if (Math.floor(Math.random() * 100) <= 33) {
-        return "Rock";
-    } else if (Math.floor(Math.random() * 100) <= 66) {
-        return "Paper";
-    } else {
-        return "Scissors";
-    }
-}
+buttons.forEach(button => {
+    button.addEventListener("click", (e) => {
+    let playerSelection = e.target.id;
+    userCount += 1;
+    round.textContent = `Round: ${userCount}`;
 
-
-function playRound(playerSelection, computerSelection) {
-
-    
-    if (playerSelection === "rock" && computerSelection == "Rock") {
-        userScore++;
-        compScore++;
-        return "It's a tie! Rock & Rock";
-    } else if (playerSelection === "paper" && computerSelection == "Paper") {
-        userScore++;
-        compScore++;
-        return "It's a tie! Paper & paper";
-    } else if (playerSelection === "scissors" && computerSelection == "Scissors") {
-        userScore++;
-        compScore++;
-        return "It's a tie! Scissors & scissors";
-    } else if (playerSelection === "paper" && computerSelection == "Rock") {
-        userScore++;
-        return "You Win! Paper beats Rock!";
-    } else if (playerSelection === "rock" && computerSelection == "Paper") {
-        compScore++;
-        return "You Lose! Paper beats Rock!";
-    } else if (playerSelection === "rock" && computerSelection == "Scissors") {
-        userScore++;
-        return "You Win! Rock beats Scissors!";
-    } else if (playerSelection === "scissors" && computerSelection == "Rock") {
-        compScore++;
-        return "You Lose! Rock beats Scissors!";
-    } else if (playerSelection === "paper" && computerSelection == "Scissors") {
-        compScore++;
-        return "You Lose! Scissors beats Paper!";
-    } else if (playerSelection === "scissors" && computerSelection == "Paper") {
-        userScore++;
-        return "You Win! Scissors beats Paper!";
-    } else {
-        return "Enter a valid option";
-    }
-}
-
-// console.log(playRound());
-
-
-function playGame() {
-
-    for (let i = 1; i < 6; i++){
-    let playerSelection = prompt("Pick your weapon?", "").toLowerCase();
     let computerSelection = getComputerChoice();
-    playRound(playerSelection, computerSelection);
-    console.log(`Round ${i}`);
-    console.log(`You picked: ${playerSelection} Computer picked: ${computerSelection}`);
-    console.log(`Your score: ${userScore} Computer Score: ${compScore}`);
-    userCount++;
-    }
-
-    if (userCount == 5) {
-        if (userScore == compScore) {
-            return "GAME OVER. It's a TIE";
-        } else if (userScore > compScore) {
-            return "GAME OVER. You WIN";
+    function getComputerChoice() {
+        if (Math.floor(Math.random() * 100) <= 33) {
+            return "rock";
+        } else if (Math.floor(Math.random() * 100) <= 66) {
+            return "paper";
         } else {
-            return "GAME OVER. You lose.";
+            return "scissors";
         }
-    } 
-};
+    }
+    picks.textContent = `You picked ${playerSelection} and computer picked ${computerSelection}`;
 
-console.log(playGame());
+    function playRound(playerSelection, computerSelection) {
+        if (playerSelection === computerSelection) {
+            userScore += 1;
+            compScore += 1;
+            score.textContent = `User score is ${userScore} and computer score is ${compScore}`;
+            outcome.textContent = "It's a tie this round!"
+        } else if (playerSelection == "paper" && computerSelection == "rock") {
+            userScore += 1;
+            score.textContent = `User score is ${userScore} and computer score is ${compScore}`;
+            outcome.textContent = "You win this round! Paper beats Rock!";
+        } else if (playerSelection == "rock" && computerSelection == "paper") {
+            compScore += 1;
+            score.textContent = `User score is ${userScore} and computer score is ${compScore}`;
+            outcome.textContent = "You lose this round! Paper beats Rock!";
+        } else if (playerSelection == "rock" && computerSelection == "scissors") {
+            userScore += 1;
+            score.textContent = `User score is ${userScore} and computer score is ${compScore}`;
+            outcome.textContent = "You win this round! Rock beats Scissors!";
+        } else if (playerSelection == "scissors" && computerSelection == "rock") {
+            compScore += 1;
+            score.textContent = `User score is ${userScore} and computer score is ${compScore}`;
+            outcome.textContent = "You lose this round! Rock beats Scissors!";
+        } else if (playerSelection == "paper" && computerSelection == "scissors") {
+            compScore += 1;
+            score.textContent = `User score is ${userScore} and computer score is ${compScore}`;
+            outcome.textContent = "You lose this round! Scissors beats Paper!";
+        } else if (playerSelection == "scissors" && computerSelection == "paper") {
+            userScore += 1;
+            score.textContent = `User score is ${userScore} and computer score is ${compScore}`;
+            outcome.textContent = "You win this round! Scissors beats Paper!";
+        } 
+    }
+    playRound(playerSelection, computerSelection);
+    if (userCount === 5) {
+        if (userScore == compScore) {
+            over.textContent = "GAME OVER! It's a tie!";
+        } else if (userScore > compScore) {
+            over.textContent = "GAME OVER! You win =)";
+        } else {
+            over.textContent = "GAME OVER! You lose =(";
+        }
+
+        let restart = document.createElement("button");
+        restart.textContent = "Try Again";
+        document.body.appendChild(restart);
+        restart.addEventListener("click", () => {
+            window.location.reload();
+            return false;
+        })
+    } 
+    });
+});
